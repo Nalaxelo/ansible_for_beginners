@@ -9,3 +9,4 @@
         dest: /home/ansadmin
         mode: 0600
         owner: john
+      when: ansible_os_family == "RedHat"

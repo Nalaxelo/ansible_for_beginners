@@ -1,0 +1,4 @@
+- name: New Kernel Version
+  shell: uname -r
+  register: new_ker
+- debug: msg="New Kernel Version is {{ new_ker.stdout }} and old Kernel Version was {{ curr_ker.stdout }}"

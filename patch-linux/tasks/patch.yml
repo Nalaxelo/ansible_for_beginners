@@ -1,0 +1,7 @@
+- name: Initiating Patching
+  yum:
+    name=kernel
+    state=latest
+  register: yum_update
+- debug: msg="kernel has been updated"
+  when: yum_update.rc == 0

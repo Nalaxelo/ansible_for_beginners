@@ -1,0 +1,5 @@
+- name: Copy the Kernel Patch Repo File
+  copy:
+    src: ../files/kernel.repo
+    dest: /etc/yum.repos.d/
+    remote_src: yes

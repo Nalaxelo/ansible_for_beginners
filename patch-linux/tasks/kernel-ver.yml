@@ -1,0 +1,3 @@
+- name: Current Kernel Version
+  shell: uname -r
+  register: curr_ker

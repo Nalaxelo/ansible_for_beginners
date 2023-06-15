@@ -10,6 +10,19 @@
     name: apache2
     state: started
 
+      # - name: start firewalld
+      # service:
+      # name: firewalld
+      # state: started
+      # enabled: true
+
+      # - name: permit http service
+      # firewalld:
+      # service: http
+      # permanent: true
+      # state: enabled
+      # immediate: yes
+
 - name: restart apache
   service:
     name: httpd

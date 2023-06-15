@@ -1,0 +1,51 @@
+---
+- name: Playbook to run scripts that stop control m apps
+  hosts: webservers
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Stopping the Conrol M Appl (ctm_stop.sh)
+      shell: /opt/aptm/ctm_stop.sh > /tmp/out2 2>&1; cat /tmp/out2 | grep -iw 'failed' > /dev/null; if [ $? == 0 ]; then echo 'ApplstopFailed'; else echo 'ApplStopped'; fi 
+      register: appr_check
+
+    - debug:
+        msg: "CTM appl stopped successfully"
+      when: appr_check.stdout == 'ApplStopped'
+
+    - debug:
+        msg: "CTM appl stop has failed!!!"
+      when: appr_check.stdout == 'ApplstopFailed'
+
+    - name: Log message for Control M Appl
+      command: cat /tmp/out2
+      register: logmsg
+
+    - debug:
+        msg: "{{ logmsg }}"
+
+    - name: Wait for 10 seconds
+      wait_for: timeout=10
+
+    - name: Stopping APTM DB (aptm_dev_DB_stop.sh)
+      shell: /opt/aptm/aptm_dev_DB_stop.sh > /tmp/out3 2>&1; cat /tmp/out3 | grep -iw 'failed' > /dev/null; if [ $? == 0 ]; then echo 'dbstoppedfailed'; else echo 'dbstopped'; fi
+      when: appr_check.stdout == 'ApplStopped'
+      register: db_status_check
+
+    - debug:
+         msg: "APTM DB Stopped Failed"
+      when: db_status_check.stdout == 'dbstoppedfailed'
+
+    - name: Log message for APTM DB stopped
+      command: cat /tmp/out3
+      register: logmsg1
+
+    - debug:
+         msg: "{{ logmsg1.stdout_lines }}"
+
+    - debug:
+         msg: "APTM DB has stopped successfully"
+      when: db_status_check.stdout == "dbstopped"
+
+    - name: Wait for 10 seconds
+      wait_for: timeout=10 

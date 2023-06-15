@@ -1,0 +1,12 @@
+---
+# tasks file for patch-linux
+# - import_tasks: verify.yml
+# - import_tasks: decision.yml
+# - import_tasks: copy-repo.yml
+# - import_tasks: kernel-ver.yml
+# - import_tasks: patch.yml
+# - import_tasks: check-reboot.yml
+# - import_tasks: reboot.yml
+# - import_tasks: wait.yml
+# - import_tasks: final.yml
+- import_tasks: complete.yml

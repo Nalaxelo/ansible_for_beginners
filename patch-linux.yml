@@ -1,0 +1,6 @@
+---
+- name: Playbook to use patching role
+  hosts: webservers
+  become: true
+  roles:
+    - patch-linux

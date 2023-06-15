@@ -1,0 +1,4 @@
+- name: Reboot the system after patching
+  shell: "shutdown -r now"
+  async: 1
+  poll: 0

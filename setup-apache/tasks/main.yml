@@ -14,9 +14,17 @@
   when: ansible_os_family == "Debian"
   notify: start apache2
 
+    # - name: install firewalld
+  # yum:
+    # name: firewalld
+      # state: removed
+      # notify: 
+      # - start firewalld
+      # - permit http service
+
 - name: Copy index.html
   copy:
-    src: /opt/ansible/index.html
+    src: ../files/index.html
     dest: /var/www/html
     mode: 0666
 
